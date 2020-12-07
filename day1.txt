@@ -155,7 +155,7 @@ Docker Container
 
 Docker Workflow
 ====================================================================
-Human -> Docker Clinet ----- Docker Server
+Human -> Docker Client -----> Docker Server
 	Docker Server check
 		IF - Image Exist in LOCAL registry - Send a Request to ContainerD
 		IF - Image does not exit
@@ -168,16 +168,194 @@ https://www.devopsschool.com/tutorial/docker/install-config/docker-install-commu
 
 13.232.186.133
 
+VMs Lifecycle
+----------------------------------------------------
+Create -> Start -> Stop -> Start -> Restart -> Pause -> Unpause -> kill --> Remove
+
 Container Lifecycle
+====================================================
+Create -> Start -> Stop -> Start -> Restart -> Pause -> Unpause -> kill --> Remove
+
+What kind of Apps you want to run?
+- Base image 
+- Base image + App
+ubuntu
+centos
+fedora
+jenkins
+jira
+sonarqube
+apache
+nginx
+---------------------
+jenkins
+-----------------------
+		CI tool
+		Dev in JAVA
+		Base ROOT file SYstem + JAVA + JENKINS = jenkins
 
 
 
+ 17  docker images
+   18  docker ps
+   19  docker ps -a
+   20  docker info
+   21  clear
+   22  ls
+   23  cd
+   24  ;s
+   25  clear
+   26  docker ps -a
+   27  docker images
+   28  docker images
+   29  docker pull jenkins
+   30  clear
+   31  docker images
+   32  docker ps -a
+   33  docker create jenkins
+   34  docker ps -a
+   35  docker start 288c7bbd04dd
+   36  docker ps -a
+   37  docker stop 288c7bbd04dd
+   38  docker ps
+   39  docker ps -a
+   40  clear
+   41  docker create jenkins
+   42  docker create jenkins
+   43  docker create jenkins
+   44  docker ps -a
+   45  docker start 5811536b1dfb 5c39f89728b6
+   46  docker ps -a
+   47  clear
+   48  docker ps -a
+   49  docker start 288c7bbd04dd
+   50  docker ps -a
+   51  clear
+   52  docker ps -a
+   53  docker restart 5811536b1dfb
+   54  docker ps -a
+   55  clear
+   56  docker ps -a
+   57  docker pause 261c37d680d8
+   58  docker pause 5c39f89728b6
+   59  docker ps -a
+   60  docker unpause 5c39f89728b6
+   61  clear
+   62  docker ps -a
+   63  clear
+   64  docker help
+   65  clear
+   66  docker help images
+   67  docker help create
+   68  docker help start
+   69  docker help stop
+   70  docker help pause
+   71  clear
+   72  l
+   73  s
+   74  clear
+   75  docker ps -a
+   76  docker kill 261c37d680d8
+   77  docker kill 5811536b1dfb 5c39f89728b6
+   78  docker ps -a
+   79  clear
+   80  docker ps -a
+   81  docker rm 288c7bbd04dd
+   82  docker rm 261c37d680d8 5811536b1dfb 5c39f89728b6
+   83  docker ps -a
+   84  clear
+   85  history
+
+
+What is Container: Proov it
+====================================================
+	When we RUN docker image.
+		- ONE USER NS get initlized 
+			- USER IS PROCESS So Container is a process
+			- Container create user isolation for app inside it
+
+ 94  ps
+   95  ps -eaf | grep 19493
+   96  ps -eaf | grep 19491
+   97  ps -eaf | grep 7502
+   98  ps -eaf | grep 7486
+   99  ps -eaf | grep 2523
+  100  ps -eaf | grep 2525
+  101  ps -eaf | grep 1206
+  102  ps -eaf
+  103  clear
+  104  ps -eaf | grep docker
+  105  docker ps
+  106  docker ps -eaf | grep 18927
+  107  ps -eaf | grep 18927
+  108  ps -eaf | grep 8949
+  109  clear
+  110  ls
+  111  docker ps
+  112  docker exec -it 288c7bbd04dd /bin/bash
+  113  clear
+  114  history
+
+
+		- ONE COPY OF image get attached to USER NS
+  116  docker images
+  117  docker ps
+  118  df -kh
+  119  cd /var/lib/docker/overlay2/c0a8cfe0138c0c82f0f9c55f6773ef2dbbefd42ad2cbe958ec6758c73bef8391/merged
+  120  clear
+  121  ls
+  122  pwd
+  123  docker create jenkins
+  124  docker ps
+  125  docker ps -a
+  126  docker start f28896e3a3dd
+  127  clear
+  128  df -kh
+
+
+		- ONE network get attached to USER NS
+  133  clear
+  134  docker ps
+  135  docker inspect f28896e3a3dd | grep -i ip
+  136  ping 172.17.0.2
+  137  clear
+  138  docker ps
+  139  docker inspect 288c7bbd04dd | grep -i ip
+  140  ping 172.17.0.4
+  141  clear
+
+		- ONE PID get attached to USER NS
+
+[root@ip-172-31-24-140 ~]# docker exec f28896e3a3dd ps -eaf
+UID        PID  PPID  C STIME TTY          TIME CMD
+jenkins      1     0  0 11:33 ?        00:00:00 /bin/tini -- /usr/local/bin/jenkins.sh
+jenkins      6     1 19 11:33 ?        00:00:29 java -jar /usr/share/jenkins/jenkins.war
+jenkins     73     0  0 11:35 ?        00:00:00 ps -eaf
+[root@ip-172-31-24-140 ~]#
 
 
 
+Assignment
+=========================================
+- Diff between Pause and Unpause?
+- Diff between STOp vs kill
 
+==================================================================
+OS -> USER -> JAVA -> TOMCAT => WAR
+-------------------------------------
+FILE  FILE    FILE    FILE     FILE		MOUNT
+----------------------------------------
+PID 						PID
+						USER
+						NET
+	CPU - CGROUP --> PID 
+	RAM - 
+------------------------------------------------------------------
+IMAGE - BASE ROOTFS + JAVA + TOMCAQT + WAR
+	----------------------------------
+			ONE IMAGE
 
-
+	
 
 
 
