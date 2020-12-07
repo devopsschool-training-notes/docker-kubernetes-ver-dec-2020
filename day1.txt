@@ -1,0 +1,185 @@
+1234567890
+===============================
+Rajesh Kumar
+===============================
+8105843520
+-------------------------------
+5 Days - Agenda
+---------------
+Docker - 2
+Kubernetes - 3
+===================================
+Demo - Vms.
+Lab - Given by Palmeto
+==================================
+Start - 9:30 AM IST
+End - 6:30 PM IST . @6PM - we would have Assignment.
+========================================
+Break time - 20 mins. . 11 AM IST && 4:00 PM IST
+Lunch Break - 1:00 to 2:00 PM IST
+-----------------------------------------------
+1 Pre test -
+2 Post Test
+============================================================
+1 Pre test -
+	DOCKER 		- 15 mins
+	Kubernetes	- 15 mins
+
+===============================================
+https://www.devopsschool.com/lms
+	Docker Essential Quiz - 1
+	Kubernetes Essential Quiz - 1
+
+10.45 AM IST
+==============================================================
+==============================================================
+What is Docker?
+	Container mgmt tool
+	Written in Go
+	by Soloman
+	version
+		CE - FREE
+		EE - 
+	Release
+		19.x
+	
+
+	tool
+		Saving cost
+		-- Saving a APPs runtime cost in data Center. How?
+		Saving a time
+		-- - For Dev Apps -- For deploying Apps 
+		Improving a Quality of Software
+		-- Quality Code - Quality Test cases by giving more to Dev/QA by Avoiding Wastage
+
+	What is Container?	
+	================================
+	Container is Fully independent APP RUn time env with their own resources.
+
+	Container is init of 
+				ONE USER NS
+				ONE PID NS
+				ONE MNT NS
+				ONE NET NS
+			poWERed by Kernal with a help of DOCKER.
+	
+=================================================================================
+What are the components needed for ANY APP to run?
+What are the Resources needed for ANY APP to run?
+-----------------------------------------------------
+
+Hardware (CPU + RAM + Storage)
+-----------------------------
+OS
+	Kernal 
+		Namespace
+
+			NEED IT		ALLOWED By OS		Actually Can get it
+		USER	1		MULTIPLE		MULTIPLE				
+		MNT 	1		1			MULTIPLE				
+		PID	1		1			MULTIPLE						NET	1		1			MULTIPLE						
+
+		CGROUPs
+			
+Storage
+	-> File System(s) == MOUNT
+		collection of files/dir for specific purpose.
+TYPES of File System?
+- BOOT File System aka Kernal file system
+- ROOT File System aka /
+- USER File System
+- APP File System
+
+The kernel is a computer program at the core of a computer's operating system that has complete control over everything in the system.
+
+cgroups is a Linux kernel feature that limits, accounts for, and isolates the resource usage of a collection of processes
+==========================================================================
+Why 
+	MUltiple USER
+	Only 1 NET
+	Only 1 MNT
+	Only 1 PID 
+	is allowed by OS????
+-----------------------------------------------
+PC = PERSONAL COMPUTING
+===================================================================
+Evolution of Computing
+===================================================================
+To run APP
+===================================================================
+1990				2000			2020
+PHSYCIAL SERVER			Virtualization		Containerization
+		
+
+		Internet	
+
+---------------------------
+Saving a cost by Reducing a wastage
+-------------------------------------
+Docker Arch
+===================================================
+Human => Docker Client ====REST===> Docker Deamon(Server) ==> ContainerD => Kernal => NS ==> INIT
+         ==============================================
+			Docker Engine
+Docker Components
+======================================================
+Docker Engine
+	a Tool which need to be installed
+
+Docker Image
+	Collection of File system(S)
+	Such as
+		- ROOT File System 	such a fedora, ubuntu, centos, rhel, suse [ Aka Base Image]
+		- USER File System	such a tomcat, apache, mysql
+		- APP File System	such a tomcat, apache, mysql
+	Copy of each image - 
+			GET Mounted to EACH container
+Docker Registry
+	Repostory
+		has 
+		filesystem(s)
+	A place where we store docker image
+	Public
+		hub.docker.com
+		Google Regsity
+	pvt
+		artifactory
+		nexus
+
+Docker Container
+	When we RUN docker image.
+		- ONE USER NS get initlized 
+		- ONE COPY OF image get attached to USER NS
+		- ONE network get attached to USER NS
+		- ONE PID get attached to USER NS
+
+Docker Workflow
+====================================================================
+Human -> Docker Clinet ----- Docker Server
+	Docker Server check
+		IF - Image Exist in LOCAL registry - Send a Request to ContainerD
+		IF - Image does not exit
+			- Download image from Docker hub to local registry /var/lib/docker
+			- Send a Request to ContainerD
+
+How to install Docker
+====================================
+https://www.devopsschool.com/tutorial/docker/install-config/docker-install-commuityedition-centos-rhel.html
+
+13.232.186.133
+
+Container Lifecycle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
