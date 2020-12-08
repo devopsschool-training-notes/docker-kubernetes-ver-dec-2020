@@ -158,8 +158,162 @@ docker run -d jenkins
   269  docker run -d jenkins
   270  docker ps
 
+=========================================================================
+13.234.37.248
+https://www.devopsschool.com/tutorial/docker/commands/index.html
+
+cp	Copy files/folders between a container and the local filesystem
 
 
+	Copy a files and folders from'
+		From Host to container
+		Container to Host
+
+
+ 277  docker run -itd ubuntu
+  278  docker ps
+  279  clear
+  280  docker ps
+  281  docker exec 1cf83d400fa6 ls /opt
+  282  vi devopsschool.txt
+  283  ls
+  284  docker cp devopsschool.txt 1cf83d400fa6:/opt
+  285  docker exec 1cf83d400fa6 ls /opt
+  286  docker exec 1cf83d400fa6 more /opt/devopsschool.txt
+  287  clear
+  288  ls
+  289  rm -rf devopsschool.txt
+  290  ls
+  291  docker cp 1cf83d400fa6:/opt/devopsschool.txt .
+  292  ls
+  293  more devopsschool.txt
+===========================================
+
+diff	Inspect changes to files or directories on a container's filesystem
+		
+	Since a container got created
+	- using diff commands
+	- you can see 
+		- ANY FILES GOT CHNAGED
+		- GOT ADDED
+		- GOT deleted.
+
+279  docker ps
+  280  docker diff 1cf83d400fa6
+
+===========================================
+inspect	- Return low-level information on Docker objects
+
+	used for
+	- container
+	- Image
+	- network
+	- volume
+
+ 283  docker images
+  284  docker inspect jenkins
+  285  clear
+  286  docker ps
+  287  docker inspect 1cf83d400fa6
+  288  clear
+  289  docker help create
+  290  clear
+  291  docker help run
+  292  clear
+  293  docker network ls
+  294  docker inspect 3a7a00ee01c1
+  295  clear
+  296  history
+  297  docker volume ls
+  298  docker inspect 01e4f96f386089fceb1a78293d024e2c50f1641c920879524d90287b46281160
+  299  clear
+  300  history
+---------------------------------------------
+port	List port mappings or a specific mapping for the container
+
+  302  docker ps
+  303  docker port 1cf83d400fa6
+  304  docker run -d jenkins
+  305  docker ps
+  306  docker port ab31b296ccbf
+  307  docker run -d -p 8080:8080 jenkins
+  308  docker ps
+  309  docker port af5a49954881
+  310  history
+---------------------------------------------------------------
+rename	Rename a container
+
+ 312  ls
+  313  docker ps
+  314  docker rename af5a49954881 dev1
+  315  docker rename ab31b296ccbf dev2
+  316  docker ps
+  317  docker run -itd --name raju1 ubuntu
+  318  clear
+  319  docker ps
+  320  history
+
+
+
+Docker Commands - Monitoring Containers
+=======================================================
+Command	Description
+logs	Fetch the logs of a container
+------------------------------------------------------
+	You can see logs of the PID 1
+
+ 321  clear
+  322  docker ps
+  323  docker logs af5a49954881
+  324  clear
+  325  docker ps
+  326  docker logs 305b3a0ad95d
+  327  docker attach 305b3a0ad95d
+  328  docker logs 305b3a0ad95d
+
+
+
+ps	List containers
+
+stats	Display a live stream of container(s) resource usage statistics
+
+top	Display the running processes of a container
+
+events	Get real time events from the server
+
+
+ 324  clear
+  325  docker ps
+  326  docker logs 305b3a0ad95d
+  327  docker attach 305b3a0ad95d
+  328  docker logs 305b3a0ad95d
+  329  history
+  330  clear
+  331  docker stats
+  332  docker stats 305b3a0ad95d
+  333  clear
+  334  docker ps
+  335  ps -eaf | grep docker
+  336  docker top 1cf83d400fa6
+  337  clear
+  338  docker events
+  339  docker events
+  340  history
+
+
+
+
+
+Assignment
+====================================================
+update	Update configuration of one or more containers
+wait	Block until one or more containers stop, then print their exit codes
+====================================================
+docker help
+docker help update
+docker help wait
+docker help run
+docker help create
 
 
 
