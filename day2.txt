@@ -1,0 +1,169 @@
+15.206.122.56
+-------------------
+How to use container?
+-------------------------------------
+Rule
+--------------------------------------------------------------------------------------------
+Physical server 		Virtual server 			Container 
+is running			is running			is running	
+Coz of PID 1 is running		Coz of PID 1 is running		Coz of PID 1 is running
+
+
+PID 1 is SYSTEMD		PID 1 is SYSTEMD		PID 1 is ANYTHING
+								java
+								python
+								perl
+								ruby
+								bash
+								X
+								Y
+								Z
+  155  docker ps
+  156  docker ps -a
+  157  docker start f28896e3a3dd 288c7bbd04dd
+  158  docker ps -a
+  159  clear
+  160  docker ps
+  161  docker exec f28896e3a3dd ps -eaf
+  162  ps -eaf | grep jenkins.war
+  163  clear
+  164  ls
+  165  docker ps
+  166  docker exec -it f28896e3a3dd /bin/bash
+  167  docker ps
+  168  docker exec -it 288c7bbd04dd /bin/bash
+  169  docker ps
+  170  docker exec -it 288c7bbd04dd /bin/bash
+  171  docker ps
+  172  clear
+
+============================================================================
+run
+--------------
+pull -> create --> start --> BECOME CONTAINER PROCESS PID 1 AKA Attached to the container
+
+run -d
+--------------
+pull -> create --> start --> DO NOT BECOME CONTAINER PROCESS PID 1 AKA  DO NOT Attached to the container
+
+ 171  docker ps
+  172  clear
+  173  history
+  174  clear
+  175  docker run jenkins
+  176  docker ps -a
+  177  clear
+  178  clear
+  179  docker run ubuntu
+  180  docker images
+  181  docker ps
+  182  docker ps -a
+  183  clear
+  184  ls
+  185  ls
+  186  ls
+  187  dir
+  188  ps
+  189  /bin/bash
+  190  clear
+  191  docker run jenkins
+  192  clear
+  193  docker run -d jenkins
+  194  docker ps
+  195  docker run -d jenkins
+  196  docker ps
+  197  docker run -d ubuntu
+  198  docker ps -a
+
+===============================================================
+What you do with COMPUTE unit?
+---------------------------------
+Go Inside ---->
+- exec
+	Would execute an Executable INSIDE a container
+	with -it && /bin/bash - You can go inside
+
+ 201  clear
+  202  dcoe
+  203  docker ps
+  204  docker exec 9c9ba042d46a ls
+  205  clear
+  206  docker exec 9c9ba042d46a ps
+  207  docker exec 9c9ba042d46a ps -eaf
+  208  docker exec 9c9ba042d46a df -kh
+  209  docker exec 9c9ba042d46a abc
+  210   abvc
+  217  docker ps
+  218  docker exec -it 9c9ba042d46a /bin/bash
+
+
+- attach
+	BECOME CONTAINER PROCESS PID 1 AKA 
+	Attached to the container  PID 1
+
+How to come out of the container without exiting whre YOU ARE BASH.
+-----------------------------------------------
+control + P + Q
+
+
+ 219  clear
+  220  docker ps
+  221  history
+  222  clear
+  223  docker ps
+  224  docker attach 9c9ba042d46a
+  225  docker ps
+  226  clear
+  227  docker ps -a
+  228  docker run -it ubuntu /bin/bash
+  229  clear
+  230  docker run -it ubuntu /bin/bash
+  231  docker ps
+  232  history
+
+ 230  docker run -it ubuntu /bin/bash
+  231  docker ps
+  232  history
+  233  clear
+  234  docker run -itd ubuntu /bin/bash
+  235  docker run -itd ubuntu /bin/bash
+  236  docker run -itd ubuntu /bin/bash
+  237  docker run -itd ubuntu /bin/bash
+
+Access from Outside ---->
+------------------------------
+
+  241  docker ps
+  242  docker inspect 0bc181b7cc50 | grep ip
+  243  docker inspect 0bc181b7cc50 | grep -i ip
+  244  clear
+  245  ping 172.17.0.2
+  246  clear
+  247  curl http://172.17.0.2:8080
+  248  clear
+
+
+
+docker run -d -p 8080:8080 jenkins
+	         hostport:contport
+
+docker run -d -p 8090:8080 jenkins
+docker run -d jenkins
+
+
+  265  docker ps -a
+  266  clear
+  267  docker run -d -p 8080:8080 jenkins
+  268  docker run -d -p 8090:8080 jenkins
+  269  docker run -d jenkins
+  270  docker ps
+
+
+
+
+
+
+
+
+
+
