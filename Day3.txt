@@ -1,0 +1,344 @@
+- Anatomy of Docker Image1	DONE
+- How to Build Images?		DONE
+- How to share images?		DONE
+- How to use containers in DEV n QA  with ease using Docker Compose
+- Kubernetes
+- Setting up Kubernetes Clustor
+============================================================
+- Anatomy of Docker Image
+
+TYPES of File System?	
+====== OS Image ======
+- BOOT File System aka Kernal file system
+- ROOT File System aka /
+- USER File System
+- APP File System
+
+Docker Image
+	Collection of File system(S)
+	Such as
+		- ROOT File System 	such a fedora, ubuntu, centos, rhel, suse [ Aka Base Image]
+		- USER File System	such a tomcat, apache, mysql
+		- APP File System	such a tomcat, apache, mysql
+	Copy of each image - 
+			GET Mounted to EACH container
+=====================================
+3.6.38.180
+
+
+Image has layer
+	---- DATA Layer				= overlay2
+			files/dirs
+	---- Meta Layer				= image
+			ENV
+			VOLUM
+			pORT
+			PID 1
+			USER
+
+
+
+[root@ip-172-31-24-140 docker]# ls -1
+builder
+buildkit
+containers		- Container META INFO
+image			- Image META Layer
+network			- COntainer network
+overlay2		- Image and Container DATA LAYER
+plugins			- network plugin or storage
+runtimes		- 
+swarm
+tmp
+trust
+volumes			- Docker volume
+
+ 611  clear
+  612  docker ps -a
+  613  docker images
+  614  docker rmi  jenkins
+  615  clear
+  616  docker images
+  617  docker rmu ubuntu
+  618  docker rmi ubuntu
+  619  clear
+  620  docker images
+  621  docker info
+  622  cd var/lib/docker
+  623  clear
+  624  ls
+  625  cd /var/lib/docker
+  626  ls
+  627  clear
+  628  ls
+  629  cd overlay2
+  630  clear
+  631  ls
+  632  du -sh .
+  633  clear
+  634  cd ..
+  635  ls
+  636  ls -1
+  637  cd overlay2
+  638  clear
+  639  ls
+  640  docker pull ubuntu
+  641  ls
+  642  docker inspect ubuntu
+  643  ls
+  644  clear
+  645  ls
+  646  du -h --max-depth=1
+  647  cd ./76ab2b92ba09c6d706d01803c7aca0e2eec4a22b9cbccc657d35ddf736434e05
+  648  clear
+  649  ls
+  650  cd diff/
+  651  ls
+  652  cd ..
+  653  cd ..
+  654  clear
+  655  ls
+  656  cd a0f6fea6abcfe867e61d961d8b6a63e1e78f3f4b794c166192c0f278217ef720
+  657  ls
+  658  clear
+  659  ls
+  660  cd diff/
+  661  ls
+  662  cd ..
+  663  ls
+  664  cd ..
+  665  clear
+  666  ls
+  667  df -kh
+  668  docker run -itd ubuntu
+  669  ls
+  670  du -h --max-depth=1
+  671  df -kh
+  672  docker ps
+  673  docker inspect 0b978754de0b
+  674  clear
+  675  ls
+  676  cd 501858f87842c55fec39dafeaced33740233d48a98c0c18741a9ce3f13283f3a
+  677  clear
+  678  ls
+  679  cd merged
+  680  ls
+  681  cd ..
+  682  ls
+  683  cd diff
+  684  clear
+  685  ls
+  686  docker ps
+  687  docker exec 0b978754de0b touch /opt/ramu
+  688  ls
+  689  ls /opt/
+  690  ls opt/
+  691  cd ..
+  692  clear
+  693  find . -name ramu
+  694  clear
+  695  ls
+  696  cd ..
+  697  clear
+  698  find . -name ramu
+  699  df -kh
+  700  docker ps
+  701  docker stop 0b978754de0b
+  702  df -kh
+  703  find . -name ramu
+  704  clear
+  705  ls
+  706  docker images
+  707  docker history ubuntu
+  708  clear
+  709  history
+===================================================
+- How to Build Images?
+==================================================
+1. Using Existing Container
+	- Manual way
+	- ONE LAYER at a time.
+
+2. Using Dockerfile
+	- Automated
+	- Multiple Layer at one time.
+=================================================================
+Requirement
+-------------------
+- Ubuntu base
+- Install Git
+- Apache 2
+- Java 
+- SOme APP FILE in /opt
+----------------
+	Give me that image
+
+docker commit -m"ub-up-git-apache-java" -a "Rajesh Kumar" 6d2e472760d8 ub-up-git-apache-java
+ ---
+	Container Write diff layer
+	into
+	ONE READ ONLY LAYER
+
+
+
+  709  history
+  710  docker history ubuntu
+  711  clear
+  712  docker ps
+  713  docker ps -a
+  714  docker rm 0b978754de0b
+  715  clear
+  716  docker run -itd ubuntu
+  717  docker ps
+  718  docker exec 6d2e472760d8 java
+  719  docker exec 6d2e472760d8 git
+  720  docker exec 6d2e472760d8 which apache2
+  721  docker attach 6d2e472760d8
+  722  pwd
+  723  cd
+  724  clear
+  725  docker ps
+  726  docker exec 6d2e472760d8 git
+  727* clea
+  728  docker exec 6d2e472760d8 java
+  729  docker exec 6d2e472760d8 which apache2
+  730  clear
+  731  ls
+  732  touch devops.war
+  733  ls
+  734  docker cp devops.war 6d2e472760d8:/opt
+  735  docker exec 6d2e472760d8 ls/opt
+  736  docker exec 6d2e472760d8 ls /opt
+  737  clear
+  738  ls
+  739  cd /var/lib/docker/
+  740  clear
+  741  ls
+  742  cd overlay2/
+  743  ls
+  744  cd a58519627cd800329c9a1917e72d6d3cee78e1fc0598570012c038122cf0a288
+  745  clear
+  746  ls
+  747  cd diff
+  748  ls
+  749  clear
+  750  ls
+  751  cd opt
+  752  ls
+  753  pwd
+  754  clear
+  755  ls
+  756  cd
+  757  ls
+  758  docker ps
+  759  clear
+  760  docker commit -m"ub-up-git-apache-java" -a "Rajesh Kumar" 6d2e472760d8 ub-up-git-apache-java
+  761  docker images
+  762  docker history ubuntu
+  763  docker history ub-up-git-apache-java
+  764  ls
+  765  docker ps
+  766  clear
+  767  docker ps
+  768  cd /var/lib/docker/
+  769  ls
+  770  find . -name devops.war
+  771  clear
+  772  docker images
+  773  docker run -itd --name raju ub-up-git-apache-java
+  774  docker ps
+  775  docker exec d7fcdee3add2 java
+  776  docker exec d7fcdee3add2 git
+  777  docker exec d7fcdee3add2 which apache2
+  778  docker exec d7fcdee3add2 ls /opt
+  779  history
+
+INSIDE A CONTAINER
+----------------------
+[root@ip-172-31-24-140 docker]# docker attach 6d2e472760d8
+root@6d2e472760d8:/# history
+    1  clear
+    2  ls
+    3  java
+    4  git
+    5  which apache2
+    6  apt-get install git
+    7  apt-get update
+    8  apt-get install git
+    9* apt-get updat
+   10  git
+   11  clear
+   12  apt-get install apache2
+   13  which apache2
+   14  apt-get install java
+   15  apt-get install openjdk-8-jre
+   16  clear
+   17  history
+============================================================
+
+- How to share images?
+	- Using TAR ball
+	- Using hub.docker.com
+	- Using Artifactory
+
+
+  788  cd
+  789  pwd
+  790  docker save -o ub-up-git-apache-java.tar ub-up-git-apache-java
+  791  ls
+  792  du -sh ub-up-git-apache-java.tar
+  793  clear
+  794  ls
+  795  docker ps -a
+  796  docker stop d7fcdee3add2  6d2e472760d8
+  797  docker rm d7fcdee3add2  6d2e472760d8
+  798  clear
+  799  docker images
+  800  docker rmi ub-up-git-apache-java ubuntu
+  801  clear
+  802  docker images
+  803  ls
+  804  docker load -i ub-up-git-apache-java.tar
+  805  docker images
+  806  clear
+  807  ls
+  808  docker images
+  809  docker run -itd ub-up-git-apache-java
+  810  docker ps
+  811  docker exec cc1128a0b3d4 apt-get update
+  812  docker exec cc1128a0b3d4 git
+  813  docker exec cc1128a0b3d4 java
+  814  docker exec cc1128a0b3d4 which apache2
+  815  docker exec cc1128a0b3d4 ls /opt/
+  816  clear
+
+Using hub.docker.com
+- Register a account with email id and validate it - hub.docker.com
+- Create a empty repo
+- Docker login			LAPTOP
+- Docker tag - Local Repo name MUST match with repo name of hub.docker.com	LAPTOP
+- Docker push		LAPTOP
+
+
+819  clear
+  820  docker images
+  821  clear
+  822  docker login
+  823  docker images
+  824  docker tag ub-up-git-apache-java devopsschools/ub-up-git-apache-java1
+  825  docker images
+  826  docker push devopsschools/ub-up-git-apache-java1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
