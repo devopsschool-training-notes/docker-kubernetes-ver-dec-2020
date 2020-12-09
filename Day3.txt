@@ -329,16 +329,157 @@ Using hub.docker.com
   826  docker push devopsschools/ub-up-git-apache-java1
 
 
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+2. Using Dockerfile
+	- Automated
+	- Multiple Layer at one time.
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+- working with Docker Compose
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+What is Dockerfile?
+--------------------------
+	- file
+	- Lines of instruction.
+	- Each line - Create ONE LAYER
+	- Each Layer get Created from a container from Previous Line's Layer
+
+---
+FROM ubuntu
+MAINTAINER Rajesh Kumar devops@rajeshkumar.xyz	
+RUN apt-get update && apt-get install git -y	
+COPY devops.war /opt				
+ENV JAVA_HOME=/opt/xyz	
+
+docker build -t img1 .
+---
+FROM ubuntu
+MAINTAINER Rajesh Kumar devops@rajeshkumar.xyz	
+RUN apt-get update 
+RUN apt-get install git -y	
+COPY devops.war /opt				
+ENV JAVA_HOME=/opt/xyz				
+
+docker build -t img2 -f doc2 .
+
+How to set PID 1 for the container?
+------------------------------------------
+
+CMD Vs ENTRYPOINT
+========================================================
+CMD 
+	Can be replaced
+ENTRYPOINT 
+	CAN NOT BE REPLACED
+
+https://www.devopsschool.com/tutorial/docker/dockerfile/dockerfile-example-sample-lab.html
+
+======================================================================
+What is Docker Compose?
+	----
+	When you are DEV and QA ----
+	in the world of container..
+	------
+	Tool for Life Saving.
+
+
+	Tools
+		Which Read a file
+		- docker-compose.yaml
+		Contains
+			Services:
+				service1
+					build - dockerfile
+					image - imagename
+					env
+					port
+					vol
+					net
+				service2
+					build - dockerfile
+					image - imagename
+					env
+					port
+					vol
+					net
+				Service3
+					build - dockerfile
+					image - imagename
+					env
+					port
+					vol
+					net
+-----------------------------------------------------------'	
+			docker-compose up -d
+			docker-compose down
+			docker-compose up -d
+			docker-compose stop
+			docker-compose start
+			docker-compose ps
+			docker-compose logs
+
+
+version: '2'
+services:
+  wordpress:
+    image: wordpress:latest # https://hub.docker.com/_/wordpress/
+    ports:
+      - 80:80 # change ip if required
+    volumes:
+      - ./wp-app:/var/www/html # Full wordpress project
+      #- ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
+      #- ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: password
+    depends_on:
+      - db
+    networks:
+      - wordpress-network
+  db:
+    image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
+    ports:
+      - 3306:3306 # change ip if required
+    volumes:
+      - ./wp-data:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - wordpress-network
+networks:
+  wordpress-network:
+      driver: bridge
 
 
 
+ 894  vi docker-compose.yaml
+  895  pwd
+  896  docker-compose ps
+  897  docker-compose up -d
+  898  docker-compose ps
+  899  clear
+  900  docker-compose logs
+  901  docker-compose stop
+  902  docker-compose ps
+  903  docker-compose start
+  904  docker-compose ps
+  905  docker-compose rm
+  906  docker-compose ps
+  907  docker-compose stop
+  908  docker-compose ps
+  909  docker-compose rm
+  910  docker-compose ps
+  911  docker-compose up -d
+  912  docker-compose ps
 
+=======================================
+Step 1- https://www.devopsschool.com/tutorial/docker/dockerfile/dockerfile-example-sample-lab.html  - 30 
 
-
-
-
-
-
-
+Step 2 - Work with docker-compose...	- 20 mins
 
 
