@@ -1,0 +1,103 @@
+K8s
+==========
+Master server
+-------------------------------
+- API Server	-> POD -> Container -> Image -> Google Registry
+- EtcD		-> POD -> Container -> Image -> Google Registry
+- Controller Mgr-> POD -> Container -> Image -> Google Registry
+- Schedular	-> POD -> Container -> Image -> Google Registry
+
+- Kubelet
+- Docker Engine
+- Kube Proxy	-> POD -> Container -> Image -> Google Registry
+
+
+Worker Server
+-------------------------------
+- Kubelet
+- Docker Engine
+- Kube Proxy	-> POD -> Container -> Image -> Google Registry
+
+WorkStation Server
+-------------------------------
+- Kubectl
+=============================================================================
+How to setup k8s clustor?
+	 - Kubeadm
+		- Tool to setup a k8s clustor
+
+==========================================
+Where to Setup k8s?
+------------------------
+40+
+	Public Cloud
+		AWS	- EKS MANGED & HOSTED
+		GOogle	- GKE - MANGED & HOSTED
+		Azure	- AKS - MANGED & HOSTED
+
+	Private CLoud
+		Vmware
+		virtualbox
+
+
+	Physcial Machine Manual way - NA
+	Virtual Machine Manual way
+		- Kubeadm - Manual way anywhere	==========DEMO================
+		- KOPS	- Manual way in Popular cloud
+		- minikube - in your Laptop
+		
+===============================================================================
+Master - 2 CPU - 4 GB - 30 GB	= CENTOS 2
+WORKER - 1 CPU - 2 GB - 30 GB	= CENTOS 1
+=======================================
+CENTOS 1 NEEds to be Cleaned - 
+Why - COZ we have used DOCKER with BRIDGE network
+How??? 
+
+$ docker rm $(docker ps -aq)
+$ docker rm -f -v $(docker ps -q)
+$ systemctl stop docker
+$ iptables --flush
+$ echo "1" >/proc/sys/net/bridge/bridge-nf-call-iptables
+$ systemctl start docker && systemctl enable docker
+=======================================
+Master + WORKSTATION == ONE	52.66.202.148
+WORKER = SECOND			65.0.185.96
+==============================================================
+https://www.devopsschool.com/blog/setting-up-kubernetes-clusters-using-kubeadm-manual-way-in-rhel-7-centos7/
+=======================================
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 172.31.27.197:6443 --token hm6br8.ut220cqmbh0achtd \
+    --discovery-token-ca-cert-hash sha256:fe104c0ea060c3a29bd120cf3af3be95a18a2b745f507e93e62a4c19fa52091e
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
