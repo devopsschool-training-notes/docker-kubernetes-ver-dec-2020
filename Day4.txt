@@ -256,3 +256,173 @@ spec:
 13.233.190.67
 centos
 centos123
+=======================================
+- How to use POD or Debug POD?
+- How to work with ReplicationController
+- Explain
+
+-------------------------
+Troubleshooting and Debugging Commands:
+  describe      Show details of a specific resource or group of resources
+  logs          Print the logs for a container in a pod
+  attach        Attach to a running container
+  exec          Execute a command in a container
+  port-forward  Forward one or more local ports to a pod
+  cp            Copy files and directories to and from containers.
+  auth          Inspect authorization
+  debug         Create debugging sessions for troubleshooting workloads and nodes
+
+
+   95  history
+   96  sudo -s
+   97  clear
+   98  kubectl
+   99  clear
+  100  kubectl get pods -n=dev
+  101  ls
+  102  kubectl create -f pod.yaml -n=dev
+  103  kubectl get pods -n=dev
+  104  kubectl get pods -n=dev -o wide
+  105  kubectl logs hello-pod -n=dev
+  106  clear
+  107  watch kubectl logs hello-pod -n=dev
+  108  watch kubectl logs -h
+  109  kubectl attach hello-pod -n=dev
+  110  clear
+  111  kubectl get pods -n=dev
+  112  kubectl exec hello-pod -n=dev ls
+  113  clear
+  114  kubectl exec -it hello-pod -n=dev /bin/bash
+  115  kubectl get pods -n=dev
+  116  kubectl exec -h
+  117  clear
+  118  kubectl port-forward -h
+  119  kubectl get pods -n=de
+  120  kubectl get pods -n=dev
+  121  clear
+  122  kubectl port-forward pod/hello-pod 8888:80
+  123  kubectl port-forward pod/hello-pod 8888:80 -n=dev
+  124  kubectl port-forward -h
+  125  kubectl port-forward --address 0.0.0.0 pod/hello-pod 8888:80 -n=dev
+  126  clear
+  127  ls
+  128  kubectl get pods -n=dev
+  129  kubectl cp pod.yaml hello-pod:/opt -n=dev
+  130  kubectl exec hello-pod -n=dev ls /opt
+  131  kubectl cp -h
+  132  clear
+  133  kubectl auth -h
+  134  kubectl auth can-i create pods
+  135  kubectl auth can-i delete pods
+  136  kubectl debug -h
+
+=========================================
+- How to work with ReplicationController
+===========================================
+Multiple PODS
+	- ReplicationController	
+	- Replicassets
+	- Deployment
+	- DeamonSets
+	- Statefulsets
+
+====================================
+ReplicationController	
+
+- Replication: YOu can Replicate X num of PODS.
+- Controller: Make sure DESIRE # of PODS == ACTUAL # of PODS	
+
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: hello-rc
+spec:
+  replicas: 2   
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+      - name: hello-ctr
+        image: scmgalaxy/nginx-devopsschoolv1
+        ports:
+        - containerPort: 80
+
+
+https://www.devopsschool.com/blog/kubernetes-resource-requests-and-limits-of-pod-and-container/
+
+https://www.devopsschool.com/blog/how-to-autoscale-pods-based-on-cpu-memory-in-kubernetes/
+  136  kubectl debug -h
+  137  clear
+  138  history
+  139  clear
+  140  kubectl create -h
+  141  clear
+  142  ls
+  143  kubectl get rc
+  144  kubectl get rc -n=dev
+  145  vi rc.yaml
+  146  kubectl create -f rc.yaml -n=dev
+  147  kubectl get rc -n=dev
+  148  kubectl get pods -n=dev
+  149  kubectl describe rc hello-rc -n=dev
+  150  clear
+  151  kubectl get pods -n=dev
+  152  kubectl describe pod hello-pod -n=dev
+  153  kubectl get pods -n=dev
+  154  kubectl describe pod hello-rc-6c782 -n=dev
+  155  clear
+  156  kubectl get pods -n=dev
+  157  kubectl edit rc hello-rc -n=dev
+  158  kubectl get pods -n=dev
+  159  clear
+  160  vi rc.yaml
+  161  kubectl apply -f rc.yaml -n=dev
+  162  kubectl get pods -n=dev
+  163  clear
+  164  ls
+  165  kubectl scale h
+  166  kubectl scale -h
+  167  clear
+  168  kubectl get rc
+  169  kubectl get rc -n=dev
+  170  kubectl scale --replicas=2 rc/hello-rc -n=dev
+  171  kubectl get rc -n=dev
+  172  kubectl get pods -n=dev
+  173  kubectl
+  174  clear
+  175  ls
+  176  clear
+  177  ks
+  178  clear
+  179  lks
+  180  kubectl get rc -n=dev
+  181  kubectl scale --replicas=8 rc/hello-rc -n=dev
+  182  kubectl get rc -n=dev
+  183  clear
+  184  kubectl get pods -n=dev
+  185  kubectl delete pods hello-rc-6c782 hello-rc-7fd95 hello-rc-7zjfd hello-rc-99xmh hello-rc-9hbhc hello-rc-b8j8g -n=dev
+  186  kubectl get pods -n=dev
+  187  history
+
+
+ 188  clear
+  189  kubectl explain pods
+  190  clear
+  191  kubectl explain pods.spec
+  192  kubectl explain pods.spec.containers
+  193  kubectl explain ns
+  194  kubectl explain ns.spec
+  195  kubectl explain rc
+  196  kubectl explain rc.spec
+  197  kubectl explain rc.spec.template
+  198  kubectl explain rc.spec.template.spec
+  199  history
+
+
+
+
+
+
