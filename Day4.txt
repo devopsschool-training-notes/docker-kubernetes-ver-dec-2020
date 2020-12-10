@@ -87,17 +87,172 @@ Then you can join any number of worker nodes by running the following on each as
 kubeadm join 172.31.27.197:6443 --token hm6br8.ut220cqmbh0achtd \
     --discovery-token-ca-cert-hash sha256:fe104c0ea060c3a29bd120cf3af3be95a18a2b745f507e93e62a4c19fa52091e
 
+====================================================================
+13.233.190.67
+==========================
+- How kubectl(workstation) connect to API server?	DONE
+- Validating a k8s clustor				DONE
+- Concept of Namespace					DONE
+- working with Namespace				DONE
+- Working with POD					DONE
+- How to use POD or Debug POD?
+===============================================
+- How kubectl(workstation) connect to API server?
+
+kubectl
+	CHECK a file "config"
+	$USER_HOME/.kube
+
+	Content of config?
+	YAML
+--------------------------------------
+	CLUSTORS:
+	- CLUSTOR1 : API SEREVER 1
+	- CLUSTOR2 : API SEREVER 2
+	- CLUSTOR3 : API SEREVER 3
+	- CLUSTOR4 : API SEREVER 4
+
+	USERS:
+	- USER 1: CERT
+	- USER 2: CERT
+	- USER 3: CERT
+
+	CONTEXTS:
+	- CONTEXT 1 = CLUSTOR1 + USER 3
+	- CONTEXT 2
+	- CONTEXT 3
+
+	curr-context - 
+
+----------------------------------------------
+  18  kubectl get nodes
+   19  more $HOME/.kube/config
+   20  clear
+   21  ls
+   22  clear
+   23  l
+   24  s
+   25  ls
+   26  kubectl
+   27  kubectl cluster-info
+   28  kubectl version
+   29  kubectl config
+   30  kubectl config view
+   31  history
+--------------------------------------------------
+What do you want??? === DESIRE??
+	DECLARE IN YAML
+	=-==
+	
+
+   33  kubectl
+   34  kubectl api-resources
+   35  clear
+   36  kubectl api-resources
+   37  kubectl api-resources | wc -l
+   38  kubectl
+   39  kubectl api-versions
+   40  history
+================================================================
+================================================================
+Wat to do with API?
+	CRUD
+
+	Create
+		CMD
+			create
+		YAML
+			create -f
+	Read
+		CMD
+			get
+			describe
+		YAML
+	Update
+		CMD
+			edit
+		YAML
+			apply -f
+	Delete
+		CMD
+			delete
+		YAML
+			delete -f
 
 
+  42  kubectl get ns
+   43  kubectl get pods --all-namespaces
+   44  kubectl api-resources
+   45  clear
+   46  kubectl
+   47  clear
+   48  kubectl get ns
+   49  kubectl describe ns kube-system
+   50  kubectl -h
+   51  kubectl create -h
+   52  kubectl create ns -h
+   53  kubectl create namespace dev
+   54  kubectl create namespace qa
+   55  kubectl get ns
+   56  kubectl edit ns qa
+   57  kubectl delete ns qa
+   58  kubectl get ns
+
+------------------------
+pod.yaml
+-------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-pod
+  labels: 
+    app: webserver
+spec:
+  containers:
+  - name: hello-ctr
+    image: nginx
+    ports:
+    - containerPort: 80
 
 
+   60  clear
+   61  kubectl create -h
+   62  clear
+   63  pwd
+   64  cd
+   65  ;s
+   66  ls
+   67  mkdir rajesh
+   68  cd rajesh/
+   69  vi pod.yaml
+   70  kubectl create -f pod.yaml
+   71  kubectl get pods
+   72  kubectl get pods --all-namespaces
+   73  clear
+   74  kubectl create -f pod.yaml -n=dev
+   75  kubectl get pods -n=dev
+   76  kubectl get pods
+   77  kubectl describe pod hello-pod -n=dev
+   78  clear
+   79  kubectl get pods -n=rajesh
+   80  kubectl get pods -n=dev
+   81  kubectl get pods -n=dev --show-loables
+   82  kubectl get pods -n=dev --show-loabels
+   83  kubectl get pods -n=dev --show-lables
+   84  kubectl get pods -n=dev --show-labels
+   85  kubectl get pods -n=dev --show-labels -o wide
+   86  kubectl edit pod hello-pod -n=dev
+   87  kubectl get pods -n=dev --show-labels -o wide
+   88  vi pod.yaml
+   89  kubectl apply -f pod.yaml -n=dev
+   90  kubectl get pods -n=dev --show-labels -o wide
+   91  clear
+   92  kubectl get pods
+   93  kubectl delete pod hello-pod
+   94  kubectl delete -f pod.yaml -n=dev
+   95  history
 
 
-
-
-
-
-
-
-
-
+13.233.190.67
+centos
+centos123
