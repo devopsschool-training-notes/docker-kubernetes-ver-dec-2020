@@ -1,0 +1,187 @@
+13.234.35.87
+-------------------
+centos
+centos123
+============================================
+Deployment
+- Get multiple PODs
+-------------------------------------
+Replication	by ReplicaSets (v2 of rc)	-- Can get multiple PODS.
+Controller	by Deployement Controller
+Versioning
+Rollout
+Rollback
+------------------------------------
+kubectl create deployment my-dep --image=scmgalaxy/nginx-devopsschoolv1 -n=dev
+
+------------------------
+ 224  kubectl get pods -n=dev
+  225  kubectl delete pod hello-pod -n=dev
+  226  clear
+  227  kubectl get deploy -n=dev
+  228  kubectl create -h
+  229  clear
+  230  kubectl create deployment -h
+  231  clear
+  232  ls
+  233  kubectl create deployment my-dep --image=scmgalaxy/nginx-devopsschoolv1 -n=dev
+  234  ls
+  235  kubectl get deploy -n=rajesh
+  236  kubectl get deploy -n=dev
+  237  kubectl describe deploy my-dep -n=dev
+  238  kubectl get rs -n=dev
+  239  kubectl describe rs my-dep-747b4ffb56 -n=dev
+  240  clear
+  241  kubectl get deploy -n=dev
+  242  kubectl edit deploy my-dep -n=dev
+  243  kubectl get pods -n=dev
+  244  kubectl edit deploy my-dep -n=dev
+  245  kubectl get pods -n=dev
+  246  clear
+  247  ls
+  248  kubectl get deploy -n=dev
+  249  kubectl get deploy my-dep
+  250  kubectl get deploy my-dep -n=dev
+  251  kubectl get deploy my-dep -n=dev -o json
+  252  kubectl get deploy my-dep -n=dev -o yaml
+  253  kubectl get deploy my-dep -n=dev -o yaml >> dep.yaml
+  254  ls
+  255  vi dep.yaml
+  256  kubectl apply -f dep.yaml -n=dev
+  257  kubectl get pods -n=dev
+  258  cleare
+
+-----------------------------------------------
+
+ 261  kubectl scale -h
+  262  clear
+  263  kubectl scale --replicas=2 deploy/my-dep -n=dev
+  264  kubectl get pods -n=dev
+  265  kubectl scale --replicas=6 deploy/my-dep -n=dev
+  266  kubectl get pods -n=dev
+  267  clear
+  268  kubectl get pods -n=dev
+  269  kubectl delete pod my-dep-747b4ffb56-9z2mr my-dep-747b4ffb56-b944n my-dep-747b4ffb56-hzz5f my-dep-747b4ffb56-ml4d8 my-dep-747b4ffb56-mrrcm -n=dev
+  270  kubectl get pods -n=dev
+  271  clear
+  272  history
+  273  clear
+  274  kubectl
+  275  clear
+  276  kubectl rollout -h
+  277  kubectl rollout history deploy my-dep -n=dev
+  278  kubectl get pods -n=dev -o wide
+  279  curl http://10.44.0.4
+  280  kubectl edit deploy my-dep -n=dev
+  281  kubectl rollout history deploy my-dep -n=dev
+  282  kubectl get pods -n=dev -o wide
+  283  curl http://10.44.0.4
+  284  kubectl rollout history deploy my-dep -n=dev
+
+------------------------------------------------------------
+
+[centos@ip-172-31-27-197 ~]$ kubectl get deploy -n=dev
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+my-dep   6/6     6            6           27m
+[centos@ip-172-31-27-197 ~]$ kubectl describe deploy my-dep -n=dev
+Name:                   my-dep
+Namespace:              dev
+CreationTimestamp:      Fri, 11 Dec 2020 04:35:51 +0000
+Labels:                 app=my-dep
+Annotations:            deployment.kubernetes.io/revision: 2
+Selector:               app=my-dep
+Replicas:               6 desired | 6 updated | 6 total | 6 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+
+-----------
+StrategyType:           
+RollingUpdateStrategy:  
+----------------
+
+kubectl create deployment my-roll --image=scmgalaxy/nginx-devopsschoolv1 -n=dev
+kubectl get pods -n=dev -o wide
+kubectl rollout history deploy my-roll -n=dev
+kubectl rollout status deploy my-roll -n=dev
+kubectl scale --replicas=10 deploy/my-roll -n=dev
+kubectl rollout status deploy my-roll -n=dev
+# CHANGE the name of the image.	scmgalaxy/nginx-devopsschoolv2
+kubectl rollout status deploy my-roll -n=dev
+kubectl get pods -n=dev -o wide
+kubectl rollout history deploy my-roll -n=dev
+kubectl rollout status deploy my-roll -n=dev
+     
+####kubectl patch pod valid-pod -p'{"spec":{"containers":[{"name":"kubernetes-serve-hostname","image":"new image"}]}}'
+
+
+kubectl rollout undo deploy my-roll --to-revision=1 -n=dev
+kubectl rollout status deploy my-roll -n=dev
+kubectl rollout history deploy my-roll -n=dev
+kubectl get pods -n=dev -o wide
+
+285  history
+  286  clear
+  287  kubectl rollout -h
+  288  kubectl
+  289  kubectl patch -h
+  290  clear
+  291  kubectl rollout -h
+  292  kubectl rollout deployments -h
+  293  clear
+  294  kubectl get deploy -n=dev
+  295  kubectl describe deploy my-dep -n=dev
+  296  clear
+  297  kubectl explain deploy.spec
+  298  kubectl explain deploy.spec.template
+  299  kubectl explain deploy.spec.template.spec
+  300  clear
+  301  kubectl explain deploy
+  302  kubectl explain deploy.metadata
+  303  clear
+  304  kubectl explain deploy.spec
+  305  kubectl explain deploy.spec.strategy
+  306  clear
+  307  kubectl get deploy -n=dev
+  308  kubectl delete deploy my-dep -n=dev
+  309  kubectl get deploy -n=dev
+  310  kubectl get pods -n=dev
+  311  clear
+  312  kubectl create deployment my-roll --image=scmgalaxy/nginx-devopsschoolv1 -n=dev
+  313  kubectl get pods -n=dev
+  314  kubectl get pods -n=dev -o wide
+  315  curl http://10.44.0.1
+  316  kubectl rollout history deploy my-roll -n=dev
+  317  clear
+  318  kubectl rollout status deploy my-roll -n=dev
+  319  kubectl scale --replicas=10 deploy/my-roll -n=dev
+  320  kubectl rollout status deploy my-roll -n=dev
+  321  kubectl get pods -n=dev -o wide
+  322  clear
+  323  curl http://10.44.0.10
+  324  clear
+  325  kubectl get deploy -n=dev
+  326  kubectl edit deploy my-roll -n=dev
+  327  kubectl rollout status deploy my-roll -n=dev
+  328  clear
+  329  kubectl get pods -n=dev -o wide
+  330  curl http://10.44.0.12
+  331  curl http://10.44.0.4
+  332  clear
+  333  kubectl rollout history deploy my-roll -n=dev
+  334  kubectl rollout status deploy my-roll -n=dev
+  335  kubectl rollout -h
+  336  kubectl rollout undo -h
+  337  clear
+  338  kubectl rollout undo deploy my-roll --to-revision=1 -n=dev
+  339  kubectl rollout status deploy my-roll -n=dev
+  340  kubectl rollout history deploy my-roll -n=dev
+  341  kubectl get pods -n=dev -o wide
+  342  curl http://10.44.0.3
+  343  curl http://10.44.0.8
+
+
+
+
+
