@@ -181,6 +181,164 @@ kubectl get pods -n=dev -o wide
   342  curl http://10.44.0.3
   343  curl http://10.44.0.8
 
+==============================================================================================
+================================================================================================
+=========================================================
+clusterip = cluster ip == Service would have IP address of Clustor network
+		- This create a service which is accessible inside a cluster.
+		- Get IP address of POD network
+
+
+nodeport == Node Port = Service is accessible at Port of the NODE...
+		- This create a service which is accessible inside a cluster.
+		- Get IP address of POD network
+		
+		- This service get port-forward at EACH NODE of the cluster.
+
+loadbalancer	
+		- This create a service which is accessible inside a cluster.
+		- Get IP address of POD network
+		
+		- This service get port-forward at EACH NODE of the cluster.
+
+		- Create External loadbalancer at CLOUD platoform
+		- Add Each Node of the cluster to the xternal loadbalancer
+=========================================
+==============================================================================================
+==============================================================================================
+				DEMO TIME
+----------------------------------------------------------------
+
+
+  369  clear
+  370  ls
+  371  kubectl create -f pod.yaml -n=dev
+  372  kubectl create -f pod1.yaml -n=dev
+  373  kubectl get pods -n=dev
+  374  kubectl get pods -n=dev --show-labels
+  375  kubectl create service -h
+  376  clear
+  377  kubectl create service clusterip -h
+  378  clear
+  379  ls
+  380  kubectl create service clusterip my-cs --tcp=5678:80 -n=dev
+  381  kubectl get svc -n=dev
+  382  kubectl get pods -n=dev --show-labels
+  383  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev
+  384  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev --show-lables
+  385  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev --show-labels
+  386  clear
+  387  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev --show-labels
+  388  kubectl describe svc my-cs -n=dev
+  389  curl http://10.104.67.141:5678
+
+
+390  vi pod.yaml
+  391  vi pod.yaml vi pod1.yaml
+  392  vi pod.yaml vi pod.yaml
+  393  clear
+  394  ls
+  395  kubectl apply -f pod.yaml -n=dev
+  396  kubectl apply -f pod1.yaml -n=dev
+  397  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev --show-labels
+  398  vi pod1.yaml
+  399  kubectl apply -f pod1.yaml -n=dev
+  400  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev --show-labels
+  401  clear
+  402  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev --show-labels
+  403  kubectl describe svc my-cs -n=dev
+  404  curl http://10.104.67.141:5678
+  405  clear
+  406  ls
+  407  vi pod.yaml
+  408  vi pod1.yaml
+  409  kubectl apply -f pod.yaml
+  410  kubectl delete -f pod.yaml
+  411  kubectl apply -f pod.yaml -n=dev
+  412  kubectl apply -f pod1.yaml -n=dev
+  413  clear
+  414  kubectl get pods -n=dev --show-labels;kubectl get svc -n=dev --show-labels
+  415  kubectl get pods -n=dev --show-labels -o wide;kubectl get svc -n=dev --show-labels
+  416  kubectl describe svc my-cs -n=dev
+  417  curl http://10.44.0.1
+  418  curl http://10.44.0.2
+  419  clear
+  420  kubectl get pods -n=dev --show-labels -o wide;kubectl get svc -n=dev --show-labels
+  421  curl http://10.104.67.141
+  422  curl http://10.104.67.141:5678
+  423  watch curl http://10.104.67.141:5678
+  424  kubectl describe svc my-cs -n=dev
+  425  clear
+  426  kubectl edit svc my-cs -n=dev
+  427  clear
+  428  kubectl describe svc my-cs -n=dev
+  429  kubectl get pods -n=dev --show-labels -o wide;kubectl get svc -n=dev --show-labels
+  430  kubectl edit svc my-cs -n=dev
+  431  kubectl describe svc my-cs -n=dev
+  432  clear
+
+
+ 433  history
+  434  clear
+  435  kubectl get pods -n=dev --show-labels -o wide;kubectl get svc -n=dev --show-labels
+  436  history
+  437  clear
+  438  kubectl create service nodeport  my-np --tcp=5678:80 -n=dev
+  439  kubectl get pods -n=dev --show-labels -o wide;kubectl get svc -n=dev --show-labels
+  440  curl http://10.102.197.111:5678
+  441  kubectl edit svc my-np -n=dev
+  442  clear
+  443  curl http://10.102.197.111:5678
+  444  kubectl get pods -n=dev --show-labels -o wide;kubectl get svc -n=dev --show-labels
+  445  history
+
+kubectl create service loadbalancer my-lb --tcp=5678:80 -n=dev
+
+
+http://ver-1637711028.ap-south-1.elb.amazonaws.com
+
+
+=====================================
+
+kubectl create deployment my-roll --image=scmgalaxy/nginx-devopsschoolv1 -n=dev
+kubectl scale --replicas=10 deploy/my-roll -n=dev
+kubectl expose deploy my-roll --port=80 --target-port=80 -n=dev
+kubectl expose deploy my-roll --port=80 --target-port=80 --type=NodePort -n=dev
+
+=====================================
+
+ 445  history
+  446  clear
+  447  kubectl create service loadbalancer my-lb --tcp=5678:80 -n=dev
+  448  kubectl get pods -n=dev --show-labels -o wide;kubectl get svc -n=dev --show-labels
+  449  curl http://10.106.151.6:5678
+  450  kubectl edit svc my-lb -n=dev
+  451  curl http://10.106.151.6:5678
+  452  clear
+  453  curl http://ver-1637711028.ap-south-1.elb.amazonaws.com
+  454  watch curl http://ver-1637711028.ap-south-1.elb.amazonaws.com
+  455  curl http://ver.devopsschool.com
+  456  watch curl http://ver.devopsschool.com
+  457  clear
+  458  ls
+  459  kubectl expose -h
+  460  clear
+  461  kubectl create deployment my-roll --image=scmgalaxy/nginx-devopsschoolv1 -n=dev
+  462  kubectl get deploy -n=dev
+  463  kubectl scale --replicas=10 deploy/my-roll -n=dev
+  464  kubectl get deploy -n=dev
+  465  kubectl expose deploy my-roll --port=80 --target-port=80 --type=NodePort -n=dev
+  466  kubectl get svc -n=dev
+  467  curl http://my-roll
+  468  curl http://10.111.24.152
+  469  clear
+  470  kubectl get svc -n=dev
+  471  kubectl describe svc my-roll -n=dev
+
+
+
+
+
 
 
 
