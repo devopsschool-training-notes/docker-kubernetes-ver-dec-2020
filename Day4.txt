@@ -1,203 +1,296 @@
-K8s
-==========
-Master server
+MASTER + Workstation = 13.233.137.177
+Worker = 65.0.105.230
+====================================
+
+
+ 
+Chennakeshava	35.154.79.198
+Susil		15.206.90.54
+Shreyash	13.234.30.28
+Indhu		15.206.185.76
+Pranjal		13.232.209.163
+Vinay		13.233.3.8
+Alwin		65.0.122.43
+Banala		13.232.75.184
+Ajith		15.207.19.208
+
+WORKER
 -------------------------------
-- API Server	-> POD -> Container -> Image -> Google Registry
-- EtcD		-> POD -> Container -> Image -> Google Registry
-- Controller Mgr-> POD -> Container -> Image -> Google Registry
-- Schedular	-> POD -> Container -> Image -> Google Registry
-
-- Kubelet
-- Docker Engine
-- Kube Proxy	-> POD -> Container -> Image -> Google Registry
-
-
-Worker Server
--------------------------------
-- Kubelet
-- Docker Engine
-- Kube Proxy	-> POD -> Container -> Image -> Google Registry
-
-WorkStation Server
--------------------------------
-- Kubectl
-=============================================================================
-How to setup k8s clustor?
-	 - Kubeadm
-		- Tool to setup a k8s clustor
-
-==========================================
-Where to Setup k8s?
-------------------------
-40+
-	Public Cloud
-		AWS	- EKS MANGED & HOSTED
-		GOogle	- GKE - MANGED & HOSTED
-		Azure	- AKS - MANGED & HOSTED
-
-	Private CLoud
-		Vmware
-		virtualbox
+Chennakeshava	15.206.173.114
+Susil		13.233.31.207	
+Shreyash	13.127.153.68	
+Indhu		52.66.31.26	
+Pranjal		13.233.238.138	
+Vinay		65.0.133.90
+Alwin		13.234.111.83	
+Banala		13.127.22.241	
+Ajith		13.235.50.226	
 
 
-	Physcial Machine Manual way - NA
-	Virtual Machine Manual way
-		- Kubeadm - Manual way anywhere	==========DEMO================
-		- KOPS	- Manual way in Popular cloud
-		- minikube - in your Laptop
-		
-===============================================================================
-Master - 2 CPU - 4 GB - 30 GB	= CENTOS 2
-WORKER - 1 CPU - 2 GB - 30 GB	= CENTOS 1
-=======================================
-CENTOS 1 NEEds to be Cleaned - 
-Why - COZ we have used DOCKER with BRIDGE network
-How??? 
+#Jayaprasad
+==============
+13.232.176.149
+65.0.124.45
 
-$ docker rm $(docker ps -aq)
-$ docker rm -f -v $(docker ps -q)
-$ systemctl stop docker
-$ iptables --flush
-$ echo "1" >/proc/sys/net/bridge/bridge-nf-call-iptables
-$ systemctl start docker && systemctl enable docker
-=======================================
-Master + WORKSTATION == ONE	52.66.202.148
-WORKER = SECOND			65.0.185.96
-==============================================================
-https://www.devopsschool.com/blog/setting-up-kubernetes-clusters-using-kubeadm-manual-way-in-rhel-7-centos7/
-=======================================
-Your Kubernetes control-plane has initialized successfully!
+==================================
+13.233.137.177
 
-To start using your cluster, you need to run the following as a regular user:
+============================================
+How kubectl work in Workstation?
+Getting Comfortable with Kubectl
+--------------------------------
+What is Namespace?
+How to work with Namespace?
+--------------------------------
+What is POD
+How to work with Pod?
+Deep Dive into a POD?
+--------------------------------
+ReplicationController
 
-  mkdir -p $HOME/.kube
-  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+=========================
+How kubectl work in Workstation?
 
-Alternatively, if you are the root user, you can run:
+kubectl 
+	$USER_HOME/.kube/config(yaml)
 
-  export KUBECONFIG=/etc/kubernetes/admin.conf
+How Kubectl get AUTHORZIED and Authentication to API server
+	- Authentication == Certificate
+	- Authorization == RBAC
 
-You should now deploy a pod network to the cluster.
-Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
-  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+What is the content for config file?
+---------------------------------
+Clustor(S):
+	Clustor1: http:/ip/ofapi
+	Clustor2: http:/ip/ofapi
+	Clustor3: http:/ip/ofapi
+	Clustor4: http:/ip/ofapi
+User(S):
+	user1: key+cert
+	user2: key+cert
+	user3: key+cert
+Context(S)
+	Context1 = Clustor1 + user3	
+	Context2 = Clustor2 + user2	
+	Context3 = Clustor3 + user1	
+curr-context = Context2
+==========================================================
+Getting Comfortable with Kubectl
+==========================================================
 
-Then you can join any number of worker nodes by running the following on each as root:
+[centos@ip-172-31-13-37 ~]$ kubectl
+kubectl controls the Kubernetes cluster manager.
 
-kubeadm join 172.31.27.197:6443 --token hm6br8.ut220cqmbh0achtd \
-    --discovery-token-ca-cert-hash sha256:fe104c0ea060c3a29bd120cf3af3be95a18a2b745f507e93e62a4c19fa52091e
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
 
-====================================================================
-13.233.190.67
-==========================
-- How kubectl(workstation) connect to API server?	DONE
-- Validating a k8s clustor				DONE
-- Concept of Namespace					DONE
-- working with Namespace				DONE
-- Working with POD					DONE
-- How to use POD or Debug POD?
-===============================================
-- How kubectl(workstation) connect to API server?
+Basic Commands (Beginner):
+  create        Create a resource from a file or from stdin.
+  expose        Take a replication controller, service, deployment or pod and expose it as a new Kubernetes Service
+  run           Run a particular image on the cluster
+  set           Set specific features on objects
 
-kubectl
-	CHECK a file "config"
-	$USER_HOME/.kube
+Basic Commands (Intermediate):
+  explain       Documentation of resources
+  get           Display one or many resources
+  edit          Edit a resource on the server
+  delete        Delete resources by filenames, stdin, resources and names, or by resources and label selector
 
-	Content of config?
-	YAML
---------------------------------------
-	CLUSTORS:
-	- CLUSTOR1 : API SEREVER 1
-	- CLUSTOR2 : API SEREVER 2
-	- CLUSTOR3 : API SEREVER 3
-	- CLUSTOR4 : API SEREVER 4
+Deploy Commands:
+  rollout       Manage the rollout of a resource
+  scale         Set a new size for a Deployment, ReplicaSet or Replication Controller
+  autoscale     Auto-scale a Deployment, ReplicaSet, or ReplicationController
 
-	USERS:
-	- USER 1: CERT
-	- USER 2: CERT
-	- USER 3: CERT
+Cluster Management Commands:
+  certificate   Modify certificate resources.
+  cluster-info  Display cluster info
+  top           Display Resource (CPU/Memory/Storage) usage.
+  cordon        Mark node as unschedulable
+  uncordon      Mark node as schedulable
+  drain         Drain node in preparation for maintenance
+  taint         Update the taints on one or more nodes
 
-	CONTEXTS:
-	- CONTEXT 1 = CLUSTOR1 + USER 3
-	- CONTEXT 2
-	- CONTEXT 3
+Troubleshooting and Debugging Commands:
+  describe      Show details of a specific resource or group of resources
+  logs          Print the logs for a container in a pod
+  attach        Attach to a running container
+  exec          Execute a command in a container
+  port-forward  Forward one or more local ports to a pod
+  proxy         Run a proxy to the Kubernetes API server
+  cp            Copy files and directories to and from containers.
+  auth          Inspect authorization
+  debug         Create debugging sessions for troubleshooting workloads and nodes
 
-	curr-context - 
+Advanced Commands:
+  diff          Diff live version against would-be applied version
+  apply         Apply a configuration to a resource by filename or stdin
+  patch         Update field(s) of a resource
+  replace       Replace a resource by filename or stdin
+  wait          Experimental: Wait for a specific condition on one or many resources.
+  kustomize     Build a kustomization target from a directory or a remote url.
 
-----------------------------------------------
-  18  kubectl get nodes
-   19  more $HOME/.kube/config
-   20  clear
-   21  ls
+Settings Commands:
+  label         Update the labels on a resource
+  annotate      Update the annotations on a resource
+  completion    Output shell completion code for the specified shell (bash or zsh)
+
+Other Commands:
+  api-resources Print the supported API resources on the server
+  api-versions  Print the supported API versions on the server, in the form of "group/version"
+  config        Modify kubeconfig files
+  plugin        Provides utilities for interacting with plugins.
+  version       Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+
+[centos@ip-172-31-13-37 ~]$ kubectl api-resources
+NAME                              SHORTNAMES   APIVERSION                             NAMESPACED   KIND
+bindings                                       v1                                     true         Binding
+componentstatuses                 cs           v1                                     false        ComponentStatus
+configmaps                        cm           v1                                     true         ConfigMap
+endpoints                         ep           v1                                     true         Endpoints
+events                            ev           v1                                     true         Event
+limitranges                       limits       v1                                     true         LimitRange
+namespaces                        ns           v1                                     false        Namespace
+nodes                             no           v1                                     false        Node
+persistentvolumeclaims            pvc          v1                                     true         PersistentVolumeClaim
+persistentvolumes                 pv           v1                                     false        PersistentVolume
+pods                              po           v1                                     true         Pod
+podtemplates                                   v1                                     true         PodTemplate
+replicationcontrollers            rc           v1                                     true         ReplicationController
+resourcequotas                    quota        v1                                     true         ResourceQuota
+secrets                                        v1                                     true         Secret
+serviceaccounts                   sa           v1                                     true         ServiceAccount
+services                          svc          v1                                     true         Service
+mutatingwebhookconfigurations                  admissionregistration.k8s.io/v1        false        MutatingWebhookConfiguration
+validatingwebhookconfigurations                admissionregistration.k8s.io/v1        false        ValidatingWebhookConfiguration
+customresourcedefinitions         crd,crds     apiextensions.k8s.io/v1                false        CustomResourceDefinition
+apiservices                                    apiregistration.k8s.io/v1              false        APIService
+controllerrevisions                            apps/v1                                true         ControllerRevision
+daemonsets                        ds           apps/v1                                true         DaemonSet
+deployments                       deploy       apps/v1                                true         Deployment
+replicasets                       rs           apps/v1                                true         ReplicaSet
+statefulsets                      sts          apps/v1                                true         StatefulSet
+tokenreviews                                   authentication.k8s.io/v1               false        TokenReview
+localsubjectaccessreviews                      authorization.k8s.io/v1                true         LocalSubjectAccessReview
+selfsubjectaccessreviews                       authorization.k8s.io/v1                false        SelfSubjectAccessReview
+selfsubjectrulesreviews                        authorization.k8s.io/v1                false        SelfSubjectRulesReview
+subjectaccessreviews                           authorization.k8s.io/v1                false        SubjectAccessReview
+horizontalpodautoscalers          hpa          autoscaling/v1                         true         HorizontalPodAutoscaler
+cronjobs                          cj           batch/v1beta1                          true         CronJob
+jobs                                           batch/v1                               true         Job
+certificatesigningrequests        csr          certificates.k8s.io/v1                 false        CertificateSigningRequest
+leases                                         coordination.k8s.io/v1                 true         Lease
+endpointslices                                 discovery.k8s.io/v1beta1               true         EndpointSlice
+events                            ev           events.k8s.io/v1                       true         Event
+ingresses                         ing          extensions/v1beta1                     true         Ingress
+flowschemas                                    flowcontrol.apiserver.k8s.io/v1beta1   false        FlowSchema
+prioritylevelconfigurations                    flowcontrol.apiserver.k8s.io/v1beta1   false        PriorityLevelConfiguration
+ingressclasses                                 networking.k8s.io/v1                   false        IngressClass
+ingresses                         ing          networking.k8s.io/v1                   true         Ingress
+networkpolicies                   netpol       networking.k8s.io/v1                   true         NetworkPolicy
+runtimeclasses                                 node.k8s.io/v1                         false        RuntimeClass
+poddisruptionbudgets              pdb          policy/v1beta1                         true         PodDisruptionBudget
+podsecuritypolicies               psp          policy/v1beta1                         false        PodSecurityPolicy
+clusterrolebindings                            rbac.authorization.k8s.io/v1           false        ClusterRoleBinding
+clusterroles                                   rbac.authorization.k8s.io/v1           false        ClusterRole
+rolebindings                                   rbac.authorization.k8s.io/v1           true         RoleBinding
+roles                                          rbac.authorization.k8s.io/v1           true         Role
+priorityclasses                   pc           scheduling.k8s.io/v1                   false        PriorityClass
+csidrivers                                     storage.k8s.io/v1                      false        CSIDriver
+csinodes                                       storage.k8s.io/v1                      false        CSINode
+storageclasses                    sc           storage.k8s.io/v1                      false        StorageClass
+volumeattachments                              storage.k8s.io/v1                      false        VolumeAttachment
+
+
+
+11  kubectl get nodes
+   12  kubectl get pods --all-namespaces
+   13  clear
+   14  kubectl get nodes
+   15  clear
+   16  kubectl get nodes
+   17  sudo -s
+   18  more ~/.kube/config
+   19  clear
+   20  kubectl config
+   21  kubectl config view
    22  clear
-   23  l
-   24  s
-   25  ls
-   26  kubectl
-   27  kubectl cluster-info
-   28  kubectl version
-   29  kubectl config
-   30  kubectl config view
-   31  history
---------------------------------------------------
-What do you want??? === DESIRE??
-	DECLARE IN YAML
-	=-==
-	
-
-   33  kubectl
+   23  kubectl
+   24  clear
+   25  kubectl
+   26  clear
+   27* kubectl
+   28* kubectl plane is running at https://172.31.13.37:644
+   29  KubeDNS is running at https://
+   30  kubectl api-resources
+   31  kubectl api-resources | wc -l
+   32  kubectl api-resources
+   33  kubectl api-versions
    34  kubectl api-resources
    35  clear
-   36  kubectl api-resources
-   37  kubectl api-resources | wc -l
-   38  kubectl
-   39  kubectl api-versions
-   40  history
-================================================================
-================================================================
-Wat to do with API?
-	CRUD
-
-	Create
+   36  kubectl get ns
+   37  kubectl get pods -n=kube-system
+   38  history
+========================================================================
+How to work with API???
+	CRUD - GET - PUT - POST - DELETE
+	
+	CREATE
 		CMD
 			create
 		YAML
-			create -f
-	Read
+			create yaml
+	READ
 		CMD
 			get
-			describe
 		YAML
-	Update
+
+	UPDATE
 		CMD
 			edit
 		YAML
-			apply -f
-	Delete
+			apply yaml
+	DELETE 
 		CMD
 			delete
 		YAML
-			delete -f
+			delete yaml
+=========================================================================
+Namespace
+Pod
+ReplicationController
+Deployment
+Services
+Storage
+RBAC
+==============================================
 
 
-  42  kubectl get ns
-   43  kubectl get pods --all-namespaces
-   44  kubectl api-resources
-   45  clear
-   46  kubectl
-   47  clear
-   48  kubectl get ns
-   49  kubectl describe ns kube-system
-   50  kubectl -h
-   51  kubectl create -h
-   52  kubectl create ns -h
-   53  kubectl create namespace dev
-   54  kubectl create namespace qa
-   55  kubectl get ns
-   56  kubectl edit ns qa
-   57  kubectl delete ns qa
-   58  kubectl get ns
+  39  clear
+   40  kubectl
+   41  clear
+   42  kubectl -h
+   43  clear
+   44  kubectl create -h
+   45  kubectl create ns -h
+   46  history
+   47  kubectl create ns -h
+   48  clear
+   49  kubectl create namespace dev
+   50  kubectl create namespace qa
+   51  kubectl get -h
+   52  clear
+   53  kubectl get ns
+   54  kubectl edit ns dev
+   55  kubectl delete ns dev
+   56  kubectl get ns
 
+======================================================
+======================================================
 ------------------------
 pod.yaml
 -------------------
@@ -214,212 +307,136 @@ spec:
     ports:
     - containerPort: 80
 
-
-   60  clear
-   61  kubectl create -h
-   62  clear
-   63  pwd
-   64  cd
-   65  ;s
-   66  ls
-   67  mkdir rajesh
-   68  cd rajesh/
+ 65  ls
+   66  mkdir rajesh
+   67  cd rajesh/
+   68  ls
    69  vi pod.yaml
    70  kubectl create -f pod.yaml
-   71  kubectl get pods
-   72  kubectl get pods --all-namespaces
-   73  clear
-   74  kubectl create -f pod.yaml -n=dev
-   75  kubectl get pods -n=dev
-   76  kubectl get pods
-   77  kubectl describe pod hello-pod -n=dev
-   78  clear
-   79  kubectl get pods -n=rajesh
-   80  kubectl get pods -n=dev
-   81  kubectl get pods -n=dev --show-loables
-   82  kubectl get pods -n=dev --show-loabels
-   83  kubectl get pods -n=dev --show-lables
-   84  kubectl get pods -n=dev --show-labels
-   85  kubectl get pods -n=dev --show-labels -o wide
-   86  kubectl edit pod hello-pod -n=dev
-   87  kubectl get pods -n=dev --show-labels -o wide
-   88  vi pod.yaml
-   89  kubectl apply -f pod.yaml -n=dev
-   90  kubectl get pods -n=dev --show-labels -o wide
-   91  clear
-   92  kubectl get pods
-   93  kubectl delete pod hello-pod
-   94  kubectl delete -f pod.yaml -n=dev
-   95  history
+   71  kubectl get pod
+   72  kubectl create -f pod.yaml
+   73  kubectl get ne
+   74  kubectl get ns
+   75  clear
+   76  kubectl create ns rajesh
+   77  kubectl create -f pod.yaml -n=rajesh
+   78  kubectl get pod
+   79  kubectl get pod -n=rajesh
+   80  kubectl get pod --all-namespaces
+   81  clear
+   82  kubectl get pod -n=rajesh
+   83  kubectl get pod -n=rajesh -o wide
+   84  kubectl get pod -h
+   85  clear
+   86  kubectl get pod -n=rajesh -o wide
+   87  curl http://10.44.0.2
+   88  clear
+   89  ls
+   90  kubectl get pod -n=rajesh -o wide
+   91  kubectl edit pod hello-pod -n=rajesh
+   92  kubectl get pod -n=rajesh -o wide --show-labels
+   93  ls
+   94  vi pod.yaml
+   95  kubectl apply -f pod.yaml -n=rajesh
+   96  kubectl get pod -n=rajesh -o wide --show-labels
+   97  kubectl delete pod hello-pod
+   98  kubectl delete -f pod.yaml -n=rajesh
+   99  clear
+  100  kubectl get pods --all-namespaces
+  101  history
 
-
-13.233.190.67
-centos
-centos123
-=======================================
-- How to use POD or Debug POD?
-- How to work with ReplicationController
-- Explain
-
--------------------------
 Troubleshooting and Debugging Commands:
   describe      Show details of a specific resource or group of resources
   logs          Print the logs for a container in a pod
   attach        Attach to a running container
   exec          Execute a command in a container
+
   port-forward  Forward one or more local ports to a pod
+
   cp            Copy files and directories to and from containers.
   auth          Inspect authorization
   debug         Create debugging sessions for troubleshooting workloads and nodes
 
 
-   95  history
-   96  sudo -s
-   97  clear
-   98  kubectl
-   99  clear
-  100  kubectl get pods -n=dev
-  101  ls
-  102  kubectl create -f pod.yaml -n=dev
-  103  kubectl get pods -n=dev
-  104  kubectl get pods -n=dev -o wide
-  105  kubectl logs hello-pod -n=dev
-  106  clear
-  107  watch kubectl logs hello-pod -n=dev
-  108  watch kubectl logs -h
-  109  kubectl attach hello-pod -n=dev
+
+
+  100  kubectl get pods --all-namespaces
+  101  history
+  102  clear
+  103  kubectl
+  104  clear
+  105  kubectl apply -f pod.yaml -n=rajesh
+  106  kubectl get pods -n=rajesh
+  107  kubectl get ns
+  108  kubectl get nodes
+  109  kubectl describe pod hello-pod -n=rajesh
   110  clear
-  111  kubectl get pods -n=dev
-  112  kubectl exec hello-pod -n=dev ls
-  113  clear
-  114  kubectl exec -it hello-pod -n=dev /bin/bash
-  115  kubectl get pods -n=dev
-  116  kubectl exec -h
-  117  clear
-  118  kubectl port-forward -h
-  119  kubectl get pods -n=de
-  120  kubectl get pods -n=dev
+  111  kubectl describe ns rajesh
+  112  kubectl get nodes
+  113  kubectl describe node ip-172-31-13-37.ap-south-1.compute.internal
+  114  clear
+  115  sl
+  116  kubectl get pods -n=rajesh
+  117  kubectl logs hello-pod -n=rajesh
+  118  kubectl get pods -o wide
+  119  kubectl get pods -o wide -n=rajesh
+  120  curl http://10.44.0.1
   121  clear
-  122  kubectl port-forward pod/hello-pod 8888:80
-  123  kubectl port-forward pod/hello-pod 8888:80 -n=dev
-  124  kubectl port-forward -h
-  125  kubectl port-forward --address 0.0.0.0 pod/hello-pod 8888:80 -n=dev
-  126  clear
-  127  ls
-  128  kubectl get pods -n=dev
-  129  kubectl cp pod.yaml hello-pod:/opt -n=dev
-  130  kubectl exec hello-pod -n=dev ls /opt
-  131  kubectl cp -h
-  132  clear
-  133  kubectl auth -h
-  134  kubectl auth can-i create pods
-  135  kubectl auth can-i delete pods
-  136  kubectl debug -h
-
-=========================================
-- How to work with ReplicationController
-===========================================
-Multiple PODS
-	- ReplicationController	
-	- Replicassets
-	- Deployment
-	- DeamonSets
-	- Statefulsets
-
-====================================
-ReplicationController	
-
-- Replication: YOu can Replicate X num of PODS.
-- Controller: Make sure DESIRE # of PODS == ACTUAL # of PODS	
-
-
-apiVersion: v1
-kind: ReplicationController
-metadata:
-  name: hello-rc
-spec:
-  replicas: 2   
-  template:
-    metadata:
-      labels:
-        app: hello-world
-    spec:
-      containers:
-      - name: hello-ctr
-        image: scmgalaxy/nginx-devopsschoolv1
-        ports:
-        - containerPort: 80
-
-
-https://www.devopsschool.com/blog/kubernetes-resource-requests-and-limits-of-pod-and-container/
-
-https://www.devopsschool.com/blog/how-to-autoscale-pods-based-on-cpu-memory-in-kubernetes/
-  136  kubectl debug -h
+  122  kubectl logs hello-pod -n=rajesh
+  123  kubectl logs -h
+  124  clear
+  125  ls
+  126  kubectl get pods -n=rajesh
+  127  kubectl exec hello-pod ls
+  128  kubectl exec hello-pod ls -n=rajesh
+  129  clear
+  130  kubectl exec hello-pod -n=rajesh df -kh
+  131  kubectl exec hello-pod -n=rajesh df
+  132  kubectl exec -it hello-pod -n=rajesh /bin/bash
+  133  kubectl attach  hello-pod -n=rajesh
+  134  history
+  135  clear
+  136  kubectl attach  hello-pod -n=rajesh
   137  clear
-  138  history
+  138  kubectl port-forward -h
   139  clear
-  140  kubectl create -h
-  141  clear
-  142  ls
-  143  kubectl get rc
-  144  kubectl get rc -n=dev
-  145  vi rc.yaml
-  146  kubectl create -f rc.yaml -n=dev
-  147  kubectl get rc -n=dev
-  148  kubectl get pods -n=dev
-  149  kubectl describe rc hello-rc -n=dev
-  150  clear
-  151  kubectl get pods -n=dev
-  152  kubectl describe pod hello-pod -n=dev
-  153  kubectl get pods -n=dev
-  154  kubectl describe pod hello-rc-6c782 -n=dev
-  155  clear
-  156  kubectl get pods -n=dev
-  157  kubectl edit rc hello-rc -n=dev
-  158  kubectl get pods -n=dev
+  140  kubectl port-forward pod/hello-pod 5000 6000 -n=rajesh
+  141  kubectl port-forward pod/hello-pod 80:5000 80:6000 -n=rajesh
+  142  kubectl port-forward pod/hello-pod 80:5000  -n=rajesh
+  143  clear
+  144  kubectl port-forward pod/hello-pod 80 5000  -n=rajesh
+  145  kubectl port-forward pod/hello-pod 5000 80  -n=rajesh
+  146  kubectl port-forward -h
+  147  clear
+  148  kubectl port-forward pod/hello-pod 80:5000 -n=rajesh
+  149  kubectl port-forward pod/hello-pod 5000:80 -n=rajesh
+  150  kubectl port-forward --address 0.0.0.0 pod/hello-pod 5000:80 -n=rajesh
+
+
+ 150  kubectl port-forward --address 0.0.0.0 pod/hello-pod 5000:80 -n=rajesh
+  151  history
+  152  clear
+  153  kubectl get pods -n=rajesh
+  154  kubectl exec hello-pod -n=rajesh ls /tmp
+  155  ls
+  156  kubectl cp pod.yaml hello-pod:/tmp -n=rajesh
+  157  kubectl exec hello-pod -n=rajesh ls /tmp
+  158  kubectl cp -h
   159  clear
-  160  vi rc.yaml
-  161  kubectl apply -f rc.yaml -n=dev
-  162  kubectl get pods -n=dev
-  163  clear
-  164  ls
-  165  kubectl scale h
-  166  kubectl scale -h
-  167  clear
-  168  kubectl get rc
-  169  kubectl get rc -n=dev
-  170  kubectl scale --replicas=2 rc/hello-rc -n=dev
-  171  kubectl get rc -n=dev
-  172  kubectl get pods -n=dev
-  173  kubectl
-  174  clear
-  175  ls
-  176  clear
-  177  ks
-  178  clear
-  179  lks
-  180  kubectl get rc -n=dev
-  181  kubectl scale --replicas=8 rc/hello-rc -n=dev
-  182  kubectl get rc -n=dev
-  183  clear
-  184  kubectl get pods -n=dev
-  185  kubectl delete pods hello-rc-6c782 hello-rc-7fd95 hello-rc-7zjfd hello-rc-99xmh hello-rc-9hbhc hello-rc-b8j8g -n=dev
-  186  kubectl get pods -n=dev
-  187  history
+  160  kubectl auth
+  161  kubectl auth can-i delete pod
+  162  kubectl auth can-i create deploy
+  163  kubectl auth can-i create services
+  164  kubectl auth can-i create node
 
 
- 188  clear
-  189  kubectl explain pods
-  190  clear
-  191  kubectl explain pods.spec
-  192  kubectl explain pods.spec.containers
-  193  kubectl explain ns
-  194  kubectl explain ns.spec
-  195  kubectl explain rc
-  196  kubectl explain rc.spec
-  197  kubectl explain rc.spec.template
-  198  kubectl explain rc.spec.template.spec
-  199  history
+
+
+
+
+
+
+
 
 
 
